@@ -18,24 +18,24 @@
 #define PI             3.141592653589793238
 using namespace std;
 vector<int>v;
-bool bs(int a)
+int bs(int a)
 {
     int s=0;
     int e=v.size()-1;
+    int ans=-1;
     while(s<=e)
     {
         int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
+        if(v[mid]<=a)
         {
+            ans=mid;
             s=mid+1;
         }
         else{
             e=mid-1;
         }
     }
-    return false;
+    return ans;
 }
 int32_t main() {
     nitin;
@@ -50,10 +50,7 @@ int32_t main() {
     {
         int a;
         cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
-        else
-            cout<<"NO"<<endl;
+        cout<<bs(a)+1<<endl;
     }
     return 0;
 }

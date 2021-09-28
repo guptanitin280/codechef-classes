@@ -18,42 +18,46 @@
 #define PI             3.141592653589793238
 using namespace std;
 vector<int>v;
-bool bs(int a)
+int k;
+bool good(int m)
 {
-    int s=0;
-    int e=v.size()-1;
-    while(s<=e)
+    int cnt=0;
+    int overhead=0;
+    for(auto c:v)
     {
-        int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
+        if(c>=m)
+            cnt++;
+        else
         {
-            s=mid+1;
-        }
-        else{
-            e=mid-1;
+            overhead+=c;
+            while(overhead>=m)
+            {
+                cnt++;
+                overhead-=m;
+            }
         }
     }
-    return false;
+    return cnt>=k;
 }
 int32_t main() {
     nitin;
-    int n,q;
-    cin>>n>>q;
-    for(int i=0;i<n;i++){
+    int n;
+    cin>>k>>n;
+    counter(n){
         int a;
         cin>>a;
-        v.push_back(a);
+        v.pb(a);
     }
-    while(q--)
+    int s=0;
+    int e=1e18;
+    while(s+1<e)
     {
-        int a;
-        cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
+        int mid=(s+e)/2;
+        if(good(mid))
+            s=mid;
         else
-            cout<<"NO"<<endl;
+            e=mid;
     }
+    cout<<s<<endl;
     return 0;
 }

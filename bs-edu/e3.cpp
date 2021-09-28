@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
-
+// 1. bs
 #define int long long
-#define counter(m)     for(int i=0;i<m;i++)
+#define cf(i, a, b)       for(int i=a;i<=b;i++)
+#define cb(i, a, b)       for(int i=a;i<=b;i--)
 #define gcd            __gcd
 #define endl           "\n"
 #define pb             emplace_back
@@ -17,43 +18,34 @@
 #define nitin          ios_base::sync_with_stdio(false); cin.tie(NULL)
 #define PI             3.141592653589793238
 using namespace std;
-vector<int>v;
-bool bs(int a)
+int n,k;
+double a[100001],b[100001];
+bool good(double mid)
 {
-    int s=0;
-    int e=v.size()-1;
-    while(s<=e)
+    vector<double>v;
+    for(int i=0;i<n;i++)
     {
-        int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
-        {
-            s=mid+1;
-        }
-        else{
-            e=mid-1;
-        }
+        v.push_back(a[i]-mid*b[i]);
     }
-    return false;
+    sort(v.begin(),v.end(),greater<double>());
+    double sum=0;
+    for(int i=0;i<k;i++)
+        sum+=v[i];
+    return sum>=0;
 }
 int32_t main() {
     nitin;
-    int n,q;
-    cin>>n>>q;
-    for(int i=0;i<n;i++){
-        int a;
-        cin>>a;
-        v.push_back(a);
-    }
-    while(q--)
+    cin>>n>>k;
+    for(int i=0;i<n;i++)
+        cin>>a[i]>>b[i];
+    double s=0;
+    double e=1e10+1;
+    for(int i=0;i<=100;i++)
     {
-        int a;
-        cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
-        else
-            cout<<"NO"<<endl;
+        double m=(s+e)/2;
+        if(good(m)) s=m;
+        else e=m;
     }
+    cout<<setprecision(20)<<fixed<<s<<endl;
     return 0;
 }

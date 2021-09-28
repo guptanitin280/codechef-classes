@@ -3,7 +3,7 @@
 #define int long long
 #define counter(m)     for(int i=0;i<m;i++)
 #define gcd            __gcd
-#define endl           "\n"
+//#define endl           "\n"
 #define pb             emplace_back
 #define setbits(x)     __builtin_popcountll(x)
 #define zrobits(x)     __builtin_ctzll(x)
@@ -17,43 +17,42 @@
 #define nitin          ios_base::sync_with_stdio(false); cin.tie(NULL)
 #define PI             3.141592653589793238
 using namespace std;
+int n;
+int k;
 vector<int>v;
-bool bs(int a)
+bool good(int m)
 {
-    int s=0;
-    int e=v.size()-1;
-    while(s<=e)
+    int cnt=1;
+    int last=v[0];
+    for(int i=1;i<n;i++)
     {
-        int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
+        if(v[i]-last>=m)
         {
-            s=mid+1;
-        }
-        else{
-            e=mid-1;
+            cnt++;
+            last=v[i];
         }
     }
-    return false;
+    return cnt>=k;
 }
 int32_t main() {
     nitin;
-    int n,q;
-    cin>>n>>q;
+    cin>>n;
+    cin>>k;
     for(int i=0;i<n;i++){
         int a;
         cin>>a;
         v.push_back(a);
     }
-    while(q--)
+    int s=0;
+    int e=1e18;
+    while(s+1<e)
     {
-        int a;
-        cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
+        int mid=(s+e)/2;
+        if(good(mid))
+            s=mid;
         else
-            cout<<"NO"<<endl;
+            e=mid;
     }
+    cout<<s<<endl;
     return 0;
 }

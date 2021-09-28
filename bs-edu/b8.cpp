@@ -4,7 +4,6 @@
 #define counter(m)     for(int i=0;i<m;i++)
 #define gcd            __gcd
 #define endl           "\n"
-#define pb             emplace_back
 #define setbits(x)     __builtin_popcountll(x)
 #define zrobits(x)     __builtin_ctzll(x)
 #define mod            1000000007
@@ -17,43 +16,49 @@
 #define nitin          ios_base::sync_with_stdio(false); cin.tie(NULL)
 #define PI             3.141592653589793238
 using namespace std;
-vector<int>v;
-bool bs(int a)
+int a,b,c;
+int ra=0,rb=0,rc=0;
+int pa,pb,pc;
+int r;
+bool good(int m)
 {
-    int s=0;
-    int e=v.size()-1;
-    while(s<=e)
-    {
-        int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
-        {
-            s=mid+1;
-        }
-        else{
-            e=mid-1;
-        }
-    }
-    return false;
+    int to_comp_a=m*ra;
+    int to_com_b=m*rb;
+    int to_com_c=m*rc;
+    to_comp_a-=a;
+    to_com_b-=b;
+    to_com_c-=c;
+    int ans=0;
+    ans+=max((int)0,to_comp_a*pa);
+    ans+=max((int)0,to_com_b*pb);
+    ans+=max((int)0,to_com_c*pc);
+    return ans<=r;
+
 }
 int32_t main() {
     nitin;
-    int n,q;
-    cin>>n>>q;
-    for(int i=0;i<n;i++){
-        int a;
-        cin>>a;
-        v.push_back(a);
-    }
-    while(q--)
+    string s;
+    cin>>s;
+    for(auto c:s)
     {
-        int a;
-        cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
+        if(c=='B')
+        {
+            ra++;
+        }
+        else if(c=='S')
+            rb++;
         else
-            cout<<"NO"<<endl;
+            rc++;
     }
+    cin>>a>>b>>c>>pa>>pb>>pc>>r;
+    int l=0;
+    int e=1e15;
+    while(e>l+1)
+    {
+        int mid=(l+e)/2;
+        if(good(mid)) l=mid;
+        else e=mid;
+    }
+    cout<<l<<endl;
     return 0;
 }

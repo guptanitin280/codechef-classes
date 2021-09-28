@@ -17,43 +17,50 @@
 #define nitin          ios_base::sync_with_stdio(false); cin.tie(NULL)
 #define PI             3.141592653589793238
 using namespace std;
-vector<int>v;
-bool bs(int a)
+int n;
+double x[100000];
+double v[100000];
+bool good(double m)
 {
-    int s=0;
-    int e=v.size()-1;
-    while(s<=e)
+    double ss=-1e18;
+    double se=+1e18;
+    for(int i=0;i<n;i++)
     {
-        int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
+        double s=x[i]-m*v[i];
+        double e=x[i]+m*v[i];
+        if(s>=ss && e<=se)
         {
-            s=mid+1;
+            ss=s;
+            se=e;
+        }
+        else if(e<ss || s>se)
+        {
+            return false;
         }
         else{
-            e=mid-1;
+            ss=max(ss,s);
+            se=min(se,e);
         }
     }
-    return false;
+    return true;
 }
 int32_t main() {
     nitin;
-    int n,q;
-    cin>>n>>q;
-    for(int i=0;i<n;i++){
-        int a;
-        cin>>a;
-        v.push_back(a);
-    }
-    while(q--)
+    cin>>n;
+    counter(n)
     {
-        int a;
-        cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
-        else
-            cout<<"NO"<<endl;
+        cin>>x[i]>>v[i];
     }
+    double s=0;
+    double e=1e10;
+    for(int i=0;i<70;i++)
+    {
+        double mid=(s+e)/2;
+        if(good(mid))
+            e=mid;
+        else
+            s=mid;
+    }
+    cout<<deci(e,10)<<endl;
     return 0;
 }

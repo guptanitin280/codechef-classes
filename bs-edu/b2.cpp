@@ -17,43 +17,35 @@
 #define nitin          ios_base::sync_with_stdio(false); cin.tie(NULL)
 #define PI             3.141592653589793238
 using namespace std;
-vector<int>v;
-bool bs(int a)
+int n,k;
+vector<double >v;
+bool good(double mid)
 {
-    int s=0;
-    int e=v.size()-1;
-    while(s<=e)
+    int sum=0;
+    for(auto c:v)
     {
-        int mid=(s+e)/2;
-        if(v[mid]==a)
-            return true;
-        else if(v[mid]<a)
-        {
-            s=mid+1;
-        }
-        else{
-            e=mid-1;
-        }
+        sum+=floor(c/mid);
     }
-    return false;
+    return sum>=k;
 }
 int32_t main() {
     nitin;
-    int n,q;
-    cin>>n>>q;
-    for(int i=0;i<n;i++){
-        int a;
-        cin>>a;
-        v.push_back(a);
-    }
-    while(q--)
+    cin>>n>>k;
+    v.resize(n);
+    for(int i=0;i<n;i++) cin>>v[i];
+    double l=0;
+    double r=100000000;
+    for(int i=0;i<100;i++)
     {
-        int a;
-        cin>>a;
-        if(bs(a))
-            cout<<"YES"<<endl;
-        else
-            cout<<"NO"<<endl;
+        double mid=(l+r)/2;
+        if(good(mid))
+        {
+            l=mid;
+        }
+        else{
+            r=mid;
+        }
     }
+    cout<<deci(l,9)<<endl;
     return 0;
 }
